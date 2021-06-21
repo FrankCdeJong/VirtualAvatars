@@ -1,39 +1,44 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using AvatarActions;
 using FacialExpressions;
 using UnityEngine;
 
 public class ModelScenario : MonoBehaviour {
-    private readonly ModelData _data = new ModelData();
+    private static readonly ModelData Data = new ModelData();
     public GameObject avatarA;
     public GameObject avatarB;
 
-    private EmotionController GetEmotionController(GameObject avatar) {
-        return avatar.GetComponent<PlayerEmotionController>().Controller;
-    }
+    private EmotionController _avatarAEmotionController;
+    private EmotionController _avatarBEmotionController;
+
+    private readonly int _max = Data.GetColumnData("time").Count;
+    private readonly List<float> _x11Break = Data.GetColumnData("X11 - Break");
+    private readonly List<float> _x12Anger = Data.GetColumnData("X12 - anger");
+    private readonly List<float> _x13Threaten = Data.GetColumnData("X13 - threaten");
+    private readonly List<float> _x21Gazeaway = Data.GetColumnData("X21 - gazeaway");
+    private readonly List<float> _x22Walkaway = Data.GetColumnData("X22 - walkaway ");
+
+    private AvatarAction _walkAway;
 
     private void ModelDataToAvatar(float x11, float x12, float x13, float x21, float x22) {
         // Debug.Log(x11 + " " + x12 + " " + x13 + " " + x21 + " " + x22);
-        var e = GetEmotionController(avatarA);
-        StartCoroutine(e.SetEmotion("angry", x12 * 100));
+        if (x22 >= 0.5) {
+            if (!_walkAway.Triggered) StartCoroutine(_walkAway.Trigger());
+        }
+
+        StartCoroutine(_avatarAEmotionController.SetEmotion("angry", x12 * 100));
     }
 
     private IEnumerator ApplyDataToAvatars(float yieldTime) {
         // Calling this function twice will result in some weird behavior. Maybe there should be a check to prevent
         // this from happening accidentally? TODO
 
-        // We collect each column and assign it to a list of floats
-        var max = _data.GetColumnData("time").Count;
-        var x11Break = _data.GetColumnData("X11 - Break");
-        var x12Anger = _data.GetColumnData("X12 - anger");
-        var x13Threaten = _data.GetColumnData("X13 - threaten");
-        var x21Gazeaway = _data.GetColumnData("X21 - gazeaway");
-        var x22Walkaway = _data.GetColumnData("X22 - walkaway ");
-
-        for (var i = 0; i < max; i++) {
+        for (var i = 45; i < _max; i++) {
             // Here we get all values in one row and call a function which converts the data to some action of the 
             // avatar.
-            ModelDataToAvatar(x11Break[i], x12Anger[i], x13Threaten[i], x21Gazeaway[i], x22Walkaway[i]);
+            ModelDataToAvatar(_x11Break[i], _x12Anger[i], _x13Threaten[i], _x21Gazeaway[i], _x22Walkaway[i]);
 
             // We wait for yieldTime. After the execution continues in this loop having kept all the values.
             // This way we arent' busy waiting or have to do some complicated time keeping ourselves.
@@ -44,30 +49,33 @@ public class ModelScenario : MonoBehaviour {
     }
 
     private void Start() {
-        // Here we read the model data. The data is stored in the ModelData class called _data;
-        _data.ReadCsv();
-        foreach (var c in _data.columnHeaders) {
-            Debug.Log(c);
-        }
+        _avatarAEmotionController = avatarA.GetComponent<PlayerEmotionController>().Controller;
+        _avatarBEmotionController = avatarB.GetComponent<PlayerEmotionController>().Controller;
 
-        // Double check that the PlayerEmotionController script is added to both avatars
-        if (GetEmotionController(avatarA) == null) {
+        // Double check that the PlayerEmotionController script is added to both avatars. (This could go wrong if the 
+        // scripts aren't loaded yet)
+        if (_avatarAEmotionController == null) {
             throw new Exception("Avatar A does not have an PlayerEmotionController script. " +
                                 "Without this attached we cannot set the emotions");
         }
 
-        if (GetEmotionController(avatarB) == null) {
+        if (_avatarBEmotionController == null) {
             throw new Exception("Avatar B does not have an PlayerEmotionController script. " +
                                 "Without this attached we cannot set the emotions");
         }
 
-        var time = _data.GetColumnData("time");
+        var time = Data.GetColumnData("time");
         if (time == null) {
             Debug.LogWarning("We have not read time data!");
             return;
         }
 
-       
+        _walkAway = new WalkAway(avatarB.GetComponent<Rigidbody>(), avatarB.GetComponent<Animator>(),
+            avatarB.GetComponent<Transform>());
+
+        StartCoroutine(new AngryPoint(avatarA.GetComponent<Rigidbody>(), avatarA.GetComponent<Animator>(),
+            avatarA.GetComponent<Transform>()).Trigger());
+
         StartCoroutine(ApplyDataToAvatars(0.5f));
     }
 }

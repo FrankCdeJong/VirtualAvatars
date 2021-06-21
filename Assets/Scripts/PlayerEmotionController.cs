@@ -228,7 +228,7 @@ namespace FacialExpressions {
     public class PlayerEmotionController : MonoBehaviour {
         public EmotionController Controller;
 
-        private void Start() {
+        private void Awake() {
             var ourObject = gameObject;
             Controller = new EmotionController(ourObject);
         }

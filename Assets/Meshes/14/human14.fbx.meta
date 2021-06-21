@@ -100,7 +100,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: 
+    motionNodeName: <Root Transform>
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
@@ -557,7 +557,7 @@ ModelImporter:
       takeName: CMU compliant skeleton|turn-right
       internalID: 0
       firstFrame: 0
-      lastFrame: 28
+      lastFrame: 22.1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -577,8 +577,88 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
-      transformMask: []
-      maskType: 3
+      transformMask:
+      - path: 
+        weight: 1
+      - path: base.objMesh
+        weight: 1
+      - path: CMU compliant skeleton
+        weight: 1
+      - path: CMU compliant skeleton/Hips
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LHipJoint
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LHipJoint/LeftUpLeg
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LHipJoint/LeftUpLeg/LeftLeg
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LHipJoint/LeftUpLeg/LeftLeg/LeftFoot
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LHipJoint/LeftUpLeg/LeftLeg/LeftFoot/LeftToeBase
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/LeftShoulder
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftFingerBase
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftFingerBase/LeftHandFinger1
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LThumb
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/Neck
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/Neck/Neck1
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/Neck/Neck1/Head
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/RightShoulder
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm/RightForeArm
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightFingerBase
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightFingerBase/RightHandFinger1
+        weight: 1
+      - path: CMU compliant skeleton/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RThumb
+        weight: 1
+      - path: CMU compliant skeleton/Hips/RHipJoint
+        weight: 1
+      - path: CMU compliant skeleton/Hips/RHipJoint/RightUpLeg
+        weight: 1
+      - path: CMU compliant skeleton/Hips/RHipJoint/RightUpLeg/RightLeg
+        weight: 1
+      - path: CMU compliant skeleton/Hips/RHipJoint/RightUpLeg/RightLeg/RightFoot
+        weight: 1
+      - path: CMU compliant skeleton/Hips/RHipJoint/RightUpLeg/RightLeg/RightFoot/RightToeBase
+        weight: 1
+      - path: eyebrow002.objMesh
+        weight: 1
+      - path: FACSTeeth03_bw.objMesh
+        weight: 1
+      - path: female_casualsuit01.objMesh
+        weight: 1
+      - path: high-poly.objMesh
+        weight: 1
+      - path: ponytail01.objMesh
+        weight: 1
+      - path: tongue01.objMesh
+        weight: 1
+      maskType: 0
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
