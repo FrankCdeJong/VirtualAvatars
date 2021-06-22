@@ -16,6 +16,7 @@ public class ModelScenario : MonoBehaviour {
     // Each avatar has an emotion controller
     private EmotionController _avatarAEmotionController;
     private EmotionController _avatarBEmotionController;
+    private AvatarGazeAway _avatarBgGazeAway;
 
     // We read the number of rows of data.
     private readonly int _max = Data.GetColumnData("time").Count;
@@ -35,6 +36,8 @@ public class ModelScenario : MonoBehaviour {
         if (x22 >= 0.5) {
             if (!_walkAway.Triggered) StartCoroutine(_walkAway.Trigger());
         }
+
+        _avatarBgGazeAway.GazeAway(x21);
 
         // Each row we read a new angry state so we have to set it each time.
         StartCoroutine(_avatarAEmotionController.SetEmotion("angry", x12 * 100));
@@ -64,8 +67,10 @@ public class ModelScenario : MonoBehaviour {
         // IMPORTANT: avatarA and avatarB need to be set inside of Unity.
 
         // Read the emotion controllers
-        _avatarAEmotionController = avatarA.GetComponent<PlayerEmotionController>().Controller;
-        _avatarBEmotionController = avatarB.GetComponent<PlayerEmotionController>().Controller;
+        _avatarAEmotionController = avatarA.GetComponent<AvatarEmotionController>().Controller;
+        _avatarBEmotionController = avatarB.GetComponent<AvatarEmotionController>().Controller;
+        // Get avatar B's gaze away
+        _avatarBgGazeAway = avatarB.GetComponent<AvatarGazeAway>();
 
         // Double check that the PlayerEmotionController script is added to both avatars. (This could go wrong if the 
         // scripts aren't loaded yet)

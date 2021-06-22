@@ -225,12 +225,142 @@ namespace FacialExpressions {
         }
     }
 
-    public class PlayerEmotionController : MonoBehaviour {
-        public EmotionController Controller;
+    internal class EyePosition {
+        public string Category { get; }
+        public string BlendShapeName { get; }
 
-        private void Awake() {
-            var ourObject = gameObject;
-            Controller = new EmotionController(ourObject);
+        public EyePosition(string category, string blendShapeName) {
+            Category = category;
+            BlendShapeName = blendShapeName;
+        }
+    }
+
+    public class EyeMovementController {
+        private readonly BlendShapeController _controller;
+        private readonly Dictionary<string, float> _lookValues;
+        private readonly Dictionary<string, List<EyePosition>> _eyePositions;
+
+        public EyeMovementController(GameObject attachToObject) {
+            var collectedChildComponents = attachToObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+            _controller = new BlendShapeController(collectedChildComponents);
+
+            // This dictionary stores the current emotion values
+            _lookValues = new Dictionary<string, float>();
+
+            _eyePositions = ParseEyeBlendShapes();
+        }
+
+        private Dictionary<string, List<EyePosition>> ParseEyeBlendShapes() {
+            var names = _controller.GetBlendShapeNames();
+
+            // We first parse all the emotions that exist and add them to a list
+            var positions = new Dictionary<string, List<EyePosition>>();
+            foreach (var name in names) {
+                var s = name.Split('-');
+                if (!positions.ContainsKey(s[1])) {
+                    positions.Add(s[1], new List<EyePosition>());
+                }
+
+                if (!_lookValues.ContainsKey(s[1])) {
+                    _lookValues.Add(s[1], 0f);
+                }
+            }
+
+            foreach (var name in names) {
+                var s = name.Split('-');
+
+                positions[s[1]].Add(new EyePosition(s[1], name));
+            }
+
+            return positions;
+        }
+
+        public IEnumerator SetEyeXOrYPosition(string xOrY, int value, float time) {
+            string pos;
+            string posNeg;
+            if (xOrY == "x") {
+                pos = "right";
+                posNeg = "left";
+            } else if (xOrY == "y") {
+                pos = "up";
+                posNeg = "down";
+            } else
+                throw new Exception("Can only set x or y not " + xOrY + "!");
+
+            var normalized = value;
+            if (value > 100)
+                normalized = 100;
+            if (value < -100)
+                normalized = -100;
+
+            var normalizedTime = time;
+
+            // if we wanna look right and we are looking left, first set the left position to 0
+            if (normalized > 0) {
+                if (_lookValues[posNeg] > 0) {
+                    normalizedTime /= 2;
+                    yield return SetEyePosition(posNeg, 0, normalizedTime);
+                }
+
+                yield return SetEyePosition(pos, normalized, normalizedTime);
+            }
+
+            // if we wanna look left and we are looking right, first set the right position to 0
+            if (normalized < 0) {
+                if (_lookValues[pos] > 0) {
+                    normalizedTime /= 2;
+                    yield return SetEyePosition(pos, 0, normalizedTime);
+                }
+
+                yield return SetEyePosition(posNeg, Math.Abs(normalized), normalizedTime);
+            }
+        }
+
+        public IEnumerator LookRightAndThenLeft() {
+            yield return SetEyePosition("right", 80f, .2f);
+            yield return new WaitForSeconds(.5f);
+            yield return SetEyePosition("right", 0f, .2f);
+            yield return SetEyePosition("left", 80f, .2f);
+            yield return new WaitForSeconds(.5f);
+            yield return SetEyePosition("left", 0f, .2f);
+        }
+
+        public IEnumerator SetEyePosition(string position, float intensity, float time) {
+            if (!_eyePositions.ContainsKey(position)) {
+                yield return false;
+            }
+
+            // We need to keep track of the current intensity and set the new intensity
+            var currentIntensity = _lookValues[position];
+            var difference = intensity - currentIntensity;
+            // I know, I know, this code is terrible...
+            // Essentially we need to know if we should increment or decrease the current intensity
+            var increment = difference > 0;
+            difference = Math.Abs(difference);
+            _lookValues[position] = intensity;
+
+            var incrementBy = 1;
+            if (difference >= 50) incrementBy = 10;
+
+            var waitInterval = time / difference;
+
+            for (var i = 0; i <= difference; i += incrementBy) {
+                // Universally set each blend shape with the emotion name to the same intensity
+
+                foreach (var pos in _eyePositions[position]) {
+                    if (increment) _controller.SetBlendShape(pos.BlendShapeName, currentIntensity + i);
+                    else _controller.SetBlendShape(pos.BlendShapeName, currentIntensity - i);
+                }
+
+                yield return new WaitForSeconds(waitInterval);
+            }
+
+            foreach (var pos in _eyePositions[position]) {
+                _controller.SetBlendShape(pos.BlendShapeName, intensity);
+            }
+
+            yield return true;
         }
     }
 }
