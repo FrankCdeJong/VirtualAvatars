@@ -18,6 +18,8 @@ public class ModelScenario : MonoBehaviour {
     private EmotionController _avatarBEmotionController;
     private AvatarGazeAway _avatarBgGazeAway;
 
+    public CameraController cameraController;
+
     // We read the number of rows of data.
     private readonly int _max = Data.GetColumnData("time").Count;
 
@@ -42,7 +44,7 @@ public class ModelScenario : MonoBehaviour {
         // Each row we read a new angry state so we have to set it each time.
         StartCoroutine(_avatarAEmotionController.SetEmotion("angry", x12 * 100));
 
-        // TODO: x11, x13, x21
+        // TODO: x11, x13
     }
 
     private IEnumerator ApplyDataToAvatars(float yieldTime) {
@@ -53,6 +55,22 @@ public class ModelScenario : MonoBehaviour {
         // the data to the avatars.
         // i = 45 (we skip the first 45 rows of all zeros)
         for (var i = 45; i < _max; i++) {
+            // Camera are triggered based on this scenario.
+            if (i > 50 && i < 70)
+                cameraController.ShowCameraB();
+            if (i > 70 && i < 100)
+                cameraController.ShowCameraA();
+            if (i > 100 && i < 130)
+                cameraController.ShowCameraB();
+            if (i > 130 && i < 180)
+                cameraController.ShowCameraA();
+            if (i > 180 && i < 205)
+                cameraController.ShowCameraB();
+            if (i > 205 && i < 215)
+                cameraController.ShowOverheadCamera();
+            if (i > 215)
+                cameraController.ShowCameraA();
+
             ModelDataToAvatar(_x11Break[i], _x12Anger[i], _x13Threaten[i], _x21Gazeaway[i], _x22Walkaway[i]);
 
             // We wait for yieldTime. After the execution continues in this loop having kept all the values.
@@ -74,15 +92,13 @@ public class ModelScenario : MonoBehaviour {
 
         // Double check that the PlayerEmotionController script is added to both avatars. (This could go wrong if the 
         // scripts aren't loaded yet)
-        if (_avatarAEmotionController == null) {
-            throw new Exception("Avatar A does not have an PlayerEmotionController script. " +
-                                "Without this attached we cannot set the emotions");
-        }
+        if (_avatarAEmotionController == null)
+            throw new Exception(
+                "Avatar A does not have an PlayerEmotionController script. Without this attached we cannot set the emotions");
 
-        if (_avatarBEmotionController == null) {
-            throw new Exception("Avatar B does not have an PlayerEmotionController script. " +
-                                "Without this attached we cannot set the emotions");
-        }
+        if (_avatarBEmotionController == null)
+            throw new Exception(
+                "Avatar B does not have an PlayerEmotionController script. Without this attached we cannot set the emotions");
 
         // Read time data.
         var time = Data.GetColumnData("time");
@@ -90,6 +106,8 @@ public class ModelScenario : MonoBehaviour {
             Debug.LogWarning("We have not read time data!");
             return;
         }
+
+        cameraController.ShowOverheadCamera();
 
         // We initialize the walk away action with its Body, Animator and Transform objects
         _walkAway = new WalkAway(avatarB.GetComponent<Rigidbody>(), avatarB.GetComponent<Animator>(),
