@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using FacialExpressions;
 using UnityEngine;
 
 namespace AvatarActions {
@@ -18,6 +20,32 @@ namespace AvatarActions {
 
         // This abstract class should implement an action you want an avatar to perform. 
         public abstract IEnumerator Trigger();
+    }
+
+    public class LookAway : AvatarAction {
+        // This class triggers a gaze away action. When applied to an avatar, it turns a couple degrees and moves the
+        // eyes away from the center position.
+        private readonly EyeMovementController _eyes;
+        private const int MaxLookAwayX = 70;
+        private const int MaxLookAwayY = -50;
+        
+        public LookAway(Rigidbody body, Animator animator, Transform transform) : base(body, animator, transform) {
+            _eyes = new EyeMovementController(body.gameObject);
+        }
+
+        public override IEnumerator Trigger() {
+            yield return null;
+        }
+
+        public IEnumerator SetIntensity(float intensity) {
+            var x = MaxLookAwayX * intensity;
+            var y = MaxLookAwayY * intensity;
+            yield return _eyes.SetEyeXOrYPosition("x", (int) Math.Round(x), 0.2f);
+            yield return _eyes.SetEyeXOrYPosition("y", (int) Math.Round(y), 0.2f);
+
+            if (intensity > 0.5 && intensity < 0.97)
+                Transform.Rotate(Vector3.up / 6);
+        }
     }
 
     public class AngryGesture3 : AvatarAction {

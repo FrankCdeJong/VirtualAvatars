@@ -1,4 +1,10 @@
-# VirtualAvatars
+# Virtual Avatars
+What is it?
+
+## Features
+
+
+## Project structure
 
 
 ### TODO

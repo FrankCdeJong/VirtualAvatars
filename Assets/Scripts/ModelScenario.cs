@@ -16,7 +16,6 @@ public class ModelScenario : MonoBehaviour {
     // Each avatar has an emotion controller
     private EmotionController _avatarAEmotionController;
     private EmotionController _avatarBEmotionController;
-    private AvatarGazeAway _avatarBgGazeAway;
 
     public CameraController cameraController;
 
@@ -32,6 +31,7 @@ public class ModelScenario : MonoBehaviour {
 
     // An avatar has an walk away action
     private AvatarAction _walkAway;
+    private LookAway _lookAway;
 
     private void ModelDataToAvatar(float x11, float x12, float x13, float x21, float x22) {
         // Once our walk away state reaches the threshold of 0.5 we trigger walking away. 
@@ -39,7 +39,7 @@ public class ModelScenario : MonoBehaviour {
             if (!_walkAway.Triggered) StartCoroutine(_walkAway.Trigger());
         }
 
-        _avatarBgGazeAway.GazeAway(x21);
+        StartCoroutine(_lookAway.SetIntensity(x21));
 
         // Each row we read a new angry state so we have to set it each time.
         StartCoroutine(_avatarAEmotionController.SetEmotion("angry", x12 * 100));
@@ -87,8 +87,6 @@ public class ModelScenario : MonoBehaviour {
         // Read the emotion controllers
         _avatarAEmotionController = avatarA.GetComponent<AvatarEmotionController>().Controller;
         _avatarBEmotionController = avatarB.GetComponent<AvatarEmotionController>().Controller;
-        // Get avatar B's gaze away
-        _avatarBgGazeAway = avatarB.GetComponent<AvatarGazeAway>();
 
         // Double check that the PlayerEmotionController script is added to both avatars. (This could go wrong if the 
         // scripts aren't loaded yet)
@@ -113,10 +111,13 @@ public class ModelScenario : MonoBehaviour {
         _walkAway = new WalkAway(avatarB.GetComponent<Rigidbody>(), avatarB.GetComponent<Animator>(),
             avatarB.GetComponent<Transform>());
 
+        _lookAway = new LookAway(avatarB.GetComponent<Rigidbody>(), avatarB.GetComponent<Animator>(),
+            avatarB.GetComponent<Transform>());
+
         // Test action: trigger a simple animation
         StartCoroutine(new AngryPoint(avatarA.GetComponent<Rigidbody>(), avatarA.GetComponent<Animator>(),
             avatarA.GetComponent<Transform>()).Trigger());
 
-        StartCoroutine(ApplyDataToAvatars(0.5f));
+        StartCoroutine(ApplyDataToAvatars(0.2f));
     }
 }
