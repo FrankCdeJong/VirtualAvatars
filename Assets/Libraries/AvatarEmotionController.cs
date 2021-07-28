@@ -1,4 +1,4 @@
-using FacialExpressions;
+using AvatarFacialExpressions;
 using UnityEngine;
 
 public class AvatarEmotionController : MonoBehaviour {

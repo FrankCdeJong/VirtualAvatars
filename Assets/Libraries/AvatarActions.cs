@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using FacialExpressions;
+using AvatarFacialExpressions;
 using UnityEngine;
 
 namespace AvatarActions {

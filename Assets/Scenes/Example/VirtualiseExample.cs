@@ -2,12 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using AvatarActions;
-using FacialExpressions;
+using AvatarFacialExpressions;
 using UnityEngine;
 
-public class ModelScenario : MonoBehaviour {
+public class VirtualiseExample : MonoBehaviour {
     // We read our model here already
-    private static readonly ModelData Data = new ModelData();
+    private static readonly ModelData Data = new ModelData(@"./Assets/Scenes/Example/modelData.csv");
 
     // The scenario has two avatars
     public GameObject avatarA;
@@ -57,19 +57,19 @@ public class ModelScenario : MonoBehaviour {
         for (var i = 45; i < _max; i++) {
             // Camera are triggered based on this scenario.
             if (i > 50 && i < 70)
-                cameraController.ShowCameraB();
+                cameraController.ShowCamera(1);
             if (i > 70 && i < 100)
-                cameraController.ShowCameraA();
+                cameraController.ShowCamera(0);
             if (i > 100 && i < 130)
-                cameraController.ShowCameraB();
+                cameraController.ShowCamera(1);
             if (i > 130 && i < 180)
-                cameraController.ShowCameraA();
+                cameraController.ShowCamera(0);
             if (i > 180 && i < 205)
-                cameraController.ShowCameraB();
+                cameraController.ShowCamera(1);
             if (i > 205 && i < 215)
-                cameraController.ShowOverheadCamera();
+                cameraController.ShowCamera(2);
             if (i > 215)
-                cameraController.ShowCameraA();
+                cameraController.ShowCamera(0);
 
             ModelDataToAvatar(_x11Break[i], _x12Anger[i], _x13Threaten[i], _x21Gazeaway[i], _x22Walkaway[i]);
 
@@ -105,7 +105,7 @@ public class ModelScenario : MonoBehaviour {
             return;
         }
 
-        cameraController.ShowOverheadCamera();
+        cameraController.ShowCamera(2);
 
         // We initialize the walk away action with its Body, Animator and Transform objects
         _walkAway = new WalkAway(avatarB.GetComponent<Rigidbody>(), avatarB.GetComponent<Animator>(),

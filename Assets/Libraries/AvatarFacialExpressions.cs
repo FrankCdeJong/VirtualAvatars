@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace FacialExpressions {
+namespace AvatarFacialExpressions {
     internal class BlendShape {
         public string Name { get; }
         public SkinnedMeshRenderer Mesh { get; }

@@ -5,14 +5,16 @@ using System.Linq;
 public class ModelData {
     private List<string> _columnHeaders;
     private readonly List<List<float>> _rows = new List<List<float>>();
+    private readonly string _path;
 
-    public ModelData() {
+    public ModelData(string pathToData) {
+        _path = pathToData;
         ReadCsv();
     }
 
     private void ReadCsv() {
         // read the csv file at this location
-        using var reader = new StreamReader(@"./Assets/Data/modelData.csv");
+        using var reader = new StreamReader(_path);
 
         // first row contains the column names so we need to parse strings first
         var columnHeader = false;
