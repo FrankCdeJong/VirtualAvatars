@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+/// <summary>
+/// This class acts as a way to read CSV files.
+/// </summary>
 public class ModelData {
     private List<string> _columnHeaders;
     private readonly List<List<float>> _rows = new List<List<float>>();

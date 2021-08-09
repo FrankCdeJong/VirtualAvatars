@@ -4,14 +4,29 @@ using AvatarFacialExpressions;
 using UnityEngine;
 
 namespace AvatarActions {
+    /// <summary>
+    /// The abstract AvatarAction class is a class that is used to implement an action to be performed on an Avatar.
+    /// Any number of things can be executed or triggered in an action. To implement a new action, create a new class
+    /// with the name of the action you want to implement. This new class should extend this abstract class and
+    /// implement its abstract method. Creating an instance of the sub class is done by providing the Rigidbody,
+    /// Animator, and Transform objects. These objects should not be null however, you could get away with it if you
+    /// do not use an object that is null.
+    /// </summary>
     public abstract class AvatarAction {
         protected readonly Rigidbody Body;
         protected readonly Animator Animator;
         protected readonly Transform Transform;
         protected const float MovementForce = 30f;
         protected const float MaximumVelocity = 28f;
-        public bool Triggered = false;
+        public bool Triggered;
 
+        /// <summary>
+        /// Constructor sets the protected attributes of the class Rigidbody, Animator, and Transform. These attributes
+        /// should be from the same game object.
+        /// </summary>
+        /// <param name="body">The Rigidbody of the game object.</param>
+        /// <param name="animator">The Animator of the game object.</param>
+        /// <param name="transform">The Transform of the game object.</param>
         protected AvatarAction(Rigidbody body, Animator animator, Transform transform) {
             Body = body;
             Animator = animator;
@@ -19,16 +34,29 @@ namespace AvatarActions {
         }
 
         // This abstract class should implement an action you want an avatar to perform. 
+        /// <summary>
+        /// The Trigger method is called to execute the action and perform any action on the Rigidbody, Animator or,
+        /// Transform objects. Triggering this should set the Triggered attribute to true so it can check if the action
+        /// has been triggered yet.
+        /// </summary>
+        /// <returns></returns>
         public abstract IEnumerator Trigger();
     }
 
+    /// <summary>
+    /// The LookAway action causes the Avatar to look away by moving the eyes to the right and rotating it by a few
+    /// degrees. A custom function is added to set the intensity of the look away. E.g., setting the intensity to 0.5
+    /// will make the avatar look away only 50% from the maximum look away position. The Trigger function is not
+    /// implemented (yet) and this action should be triggered by calling SetIntensity(). 
+    /// </summary>
     public class LookAway : AvatarAction {
-        // This class triggers a gaze away action. When applied to an avatar, it turns a couple degrees and moves the
-        // eyes away from the center position.
         private readonly EyeMovementController _eyes;
         private const int MaxLookAwayX = 70;
         private const int MaxLookAwayY = -50;
-        
+
+        /// <summary>
+        /// See AvatarAction class for more details.
+        /// </summary>
         public LookAway(Rigidbody body, Animator animator, Transform transform) : base(body, animator, transform) {
             _eyes = new EyeMovementController(body.gameObject);
         }
@@ -37,6 +65,13 @@ namespace AvatarActions {
             yield return null;
         }
 
+        /// <summary>
+        /// The SetIntensity function sets the Avatar's eye position away from the default. Depending on the intensity
+        /// the eyes are moved further away from the default. The maximum position is defined in MaxLookAwayX and
+        /// MaxLookAwayY. It takes 200ms for the eye position to be set.
+        /// </summary>
+        /// <param name="intensity">A float value between 0 and 1. Where 1 is the maximum intensity and 0 is the least intense.</param>
+        /// <returns></returns>
         public IEnumerator SetIntensity(float intensity) {
             var x = MaxLookAwayX * intensity;
             var y = MaxLookAwayY * intensity;
@@ -48,8 +83,10 @@ namespace AvatarActions {
         }
     }
 
+    /// <summary>
+    /// The AngryGesture3 action triggers an animation in the Avatar. This animation can be triggered only once.
+    /// </summary>
     public class AngryGesture3 : AvatarAction {
-        // This Action triggers an animation
         public AngryGesture3(Rigidbody body, Animator animator, Transform transform) : base(body, animator, transform) {
         }
 
@@ -66,6 +103,9 @@ namespace AvatarActions {
         }
     }
 
+    /// <summary>
+    /// The AngryPoint action triggers an animation in the avatar. It can be triggered only once.
+    /// </summary>
     public class AngryPoint : AvatarAction {
         // This Action triggers an animation
         public AngryPoint(Rigidbody body, Animator animator, Transform transform) : base(body, animator, transform) {
@@ -85,13 +125,18 @@ namespace AvatarActions {
         }
     }
 
+    /// <summary>
+    /// This class triggers a walk away action. When applied to an avatar, it turns 90 degrees and then walks away.
+    /// </summary>
     public class WalkAway : AvatarAction {
-        // This class triggers a walk away action. When applied to an avatar, it turns 90 degrees and then walks away.
         public WalkAway(Rigidbody body, Animator animator, Transform transform) : base(body, animator, transform) {
         }
 
+        /// <summary>
+        /// Triggering this action causes the avatar to rotate by 90 degrees and then walk away.
+        /// </summary>
+        /// <returns></returns>
         public override IEnumerator Trigger() {
-            // Check to make sure we aren't triggered twice
             if (Triggered) yield break;
             Triggered = true;
 

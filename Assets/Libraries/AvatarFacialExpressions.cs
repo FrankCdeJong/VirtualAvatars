@@ -6,6 +6,10 @@ using System.Text;
 using UnityEngine;
 
 namespace AvatarFacialExpressions {
+    /// <summary>
+    /// The BlendShape class is a data-structure that holds the Name, SkinnedMeshRenderer, and Index value of a blend
+    /// shape.
+    /// </summary>
     internal class BlendShape {
         public string Name { get; }
         public SkinnedMeshRenderer Mesh { get; }
@@ -18,9 +22,19 @@ namespace AvatarFacialExpressions {
         }
     }
 
+    /// <summary>
+    /// The BlendShapeController class parses all blend shapes on a mesh and makes it easy to get the existing blend
+    /// shapes as well as setting the intensity of each of them.
+    /// </summary>
     internal class BlendShapeController {
         private readonly BlendShape[] _blendShapes;
 
+        /// <summary>
+        /// The constructor is responsible for parsing the blend shapes of a list of SkinnedMeshRenderer. The
+        /// SkinnedMeshRenderer is the object that contains blend shapes. A game object can have several child
+        /// SkinnedMeshRenderers therefore it takes a list of all the components that should be parsed.
+        /// </summary>
+        /// <param name="components">A list of SkinnedMeshRenderers that should be parsed.</param>
         public BlendShapeController(IReadOnlyList<SkinnedMeshRenderer> components) {
             // We create an array of all the meshes and add the collected meshes to said array
             var meshes = new SkinnedMeshRenderer[components.Count];
@@ -45,11 +59,22 @@ namespace AvatarFacialExpressions {
             }
         }
 
+        /// <summary>
+        /// Returns a BlendShape instance if it exists by name.
+        /// </summary>
+        /// <param name="name">The name of the blend shape to get.</param>
+        /// <returns></returns>
         private List<BlendShape> GetBlendShape(string name) {
             // Return the blend shape if it exists, otherwise return null
             return _blendShapes.Where(blendShape => blendShape.Name == name).ToList();
         }
 
+        /// <summary>
+        /// Sets a blend shapes weight to value
+        /// </summary>
+        /// <param name="name">The name of the blend shape.</param>
+        /// <param name="value">The weight, a value from 0 to 100. With 100 being to highest weight.</param>
+        /// <returns>boolean value if the blend shape was set or not.</returns>
         public bool SetBlendShape(string name, float value) {
             // Set the blend shape if it exists. Note: if there are two blend shapes with the same name they will both
             // be set.
@@ -65,6 +90,10 @@ namespace AvatarFacialExpressions {
             return true;
         }
 
+        /// <summary>
+        /// Returns an array containing all the blend shape names.
+        /// </summary>
+        /// <returns>Array of blend shape names.</returns>
         public string[] GetBlendShapeNames() {
             // Returns a list of all blend shape names.
             var names = new string[_blendShapes.Length];
@@ -76,6 +105,9 @@ namespace AvatarFacialExpressions {
         }
     }
 
+    /// <summary>
+    /// The Emotion class is a data-structure containing an emotion name, which corresponds to a blend shape. 
+    /// </summary>
     internal class Emotion {
         public string Category { get; }
         public string SubCategory { get; }
@@ -90,6 +122,10 @@ namespace AvatarFacialExpressions {
         }
     }
 
+    /// <summary>
+    /// The EmotionController class is responsible for setting an Avatar's emotions. It parses blend shapes and
+    /// implements setting the blend shapes based on an emotion name.
+    /// </summary>
     public class EmotionController {
         /*
          *  Blend Shape parsing:
@@ -123,11 +159,15 @@ namespace AvatarFacialExpressions {
          */
 
         private readonly BlendShapeController _controller;
+
         private readonly Dictionary<string, List<Emotion>> _emotions;
-
         private readonly Dictionary<string, float> _emotionsValues;
-        // private float _globalIntensity = 0f;
 
+        /// <summary>
+        /// Creating an instance requires the a game object which is the avatar. It collects all its blend shapes
+        /// and parses the blend shapes.
+        /// </summary>
+        /// <param name="attachToObject">The object that is the avatar.</param>
         public EmotionController(GameObject attachToObject) {
             // The blend shape controller will actually set the blend shape values
             var collectedChildComponents = attachToObject.GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -140,6 +180,10 @@ namespace AvatarFacialExpressions {
             _emotions = ParseEmotionBlendShapes();
         }
 
+        /// <summary>
+        /// This function loops through all the blend shapes and parses them based on name.
+        /// </summary>
+        /// <returns>Dictionary with emotion name as key and list of Emotion instances as value.</returns>
         private Dictionary<string, List<Emotion>> ParseEmotionBlendShapes() {
             var names = _controller.GetBlendShapeNames();
 
@@ -183,6 +227,13 @@ namespace AvatarFacialExpressions {
             return emotions;
         }
 
+        /// <summary>
+        /// The SetEmotion function sets the blend shapes that correspond to an emotion name. It will set all blend
+        /// shapes for a given emotion. It takes 500ms to set an emotion.
+        /// </summary>
+        /// <param name="emotionName">The name of the emotion. E.g. "anger".</param>
+        /// <param name="intensity">A value from 0 to 100. A higher value means the blend shapes have a greater weight</param>
+        /// <returns></returns>
         public IEnumerator SetEmotion(string emotionName, float intensity) {
             if (!_emotions.ContainsKey(emotionName)) {
                 yield return false;
@@ -216,6 +267,11 @@ namespace AvatarFacialExpressions {
             yield return true;
         }
 
+        /// <summary>
+        /// Get an emotion's current intensity
+        /// </summary>
+        /// <param name="emotionName">Name of the emotion.</param>
+        /// <returns>The intensity value of the current emotion.</returns>
         public float GetEmotionIntensity(string emotionName) {
             if (!_emotions.ContainsKey(emotionName)) {
                 return 0;
@@ -225,6 +281,9 @@ namespace AvatarFacialExpressions {
         }
     }
 
+    /// <summary>
+    /// The EyePosition class is a data-structure for the blend shapes for the eyes
+    /// </summary>
     internal class EyePosition {
         public string Category { get; }
         public string BlendShapeName { get; }
@@ -235,11 +294,18 @@ namespace AvatarFacialExpressions {
         }
     }
 
+    /// <summary>
+    /// This class controls the avatars eye position by controlling the corresponding blend shapes.
+    /// </summary>
     public class EyeMovementController {
         private readonly BlendShapeController _controller;
         private readonly Dictionary<string, float> _lookValues;
         private readonly Dictionary<string, List<EyePosition>> _eyePositions;
 
+        /// <summary>
+        /// The constructor initializes the controllers and parsing of the blend shapes of the avatar.
+        /// </summary>
+        /// <param name="attachToObject">This game object is the avatar</param>
         public EyeMovementController(GameObject attachToObject) {
             var collectedChildComponents = attachToObject.GetComponentsInChildren<SkinnedMeshRenderer>();
 
@@ -251,10 +317,13 @@ namespace AvatarFacialExpressions {
             _eyePositions = ParseEyeBlendShapes();
         }
 
+        /// <summary>
+        /// This function parses the blend shapes of the game object and adds them to an internal data-structure
+        /// </summary>
+        /// <returns>Dictionary of blend shape name as key and list as value</returns>
         private Dictionary<string, List<EyePosition>> ParseEyeBlendShapes() {
             var names = _controller.GetBlendShapeNames();
 
-            // We first parse all the emotions that exist and add them to a list
             var positions = new Dictionary<string, List<EyePosition>>();
             foreach (var name in names) {
                 var s = name.Split('-');
@@ -276,7 +345,17 @@ namespace AvatarFacialExpressions {
             return positions;
         }
 
+        /// <summary>
+        /// This function sets the eye position to an x or y value to a weight value. It sets the position gradually
+        /// to ensure a smooth transition.
+        /// </summary>
+        /// <param name="xOrY">A string value which should either by "x" or "y" indicating if the eyes should be moved left or right, or up or down.</param>
+        /// <param name="value">The value is a int between -100 and 100. Positive values move the eye right, or the eye up, while negative values move the eye left or down</param>
+        /// <param name="time">This parameter represents how long it should take for the eye to move from its current position to the "value" parameter. 1 = 1 second, 0.5 = 500ms</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">If the "xOrY" parameter isn't "x" or "y" an exception is thrown.</exception>
         public IEnumerator SetEyeXOrYPosition(string xOrY, int value, float time) {
+            // Parse the xOrY parameter.
             string pos;
             string posNeg;
             if (xOrY == "x") {
@@ -288,6 +367,7 @@ namespace AvatarFacialExpressions {
             } else
                 throw new Exception("Can only set x or y not " + xOrY + "!");
 
+            // Limit the value to a maximum of 100 or minimum of -100. I.e. a value of 356 is capped at 100.
             var normalized = value;
             if (value > 100)
                 normalized = 100;
@@ -317,15 +397,16 @@ namespace AvatarFacialExpressions {
             }
         }
 
-        public IEnumerator LookRightAndThenLeft() {
-            yield return SetEyePosition("right", 80f, .2f);
-            yield return new WaitForSeconds(.5f);
-            yield return SetEyePosition("right", 0f, .2f);
-            yield return SetEyePosition("left", 80f, .2f);
-            yield return new WaitForSeconds(.5f);
-            yield return SetEyePosition("left", 0f, .2f);
-        }
-
+        /// <summary>
+        /// Set a the eye position using its blend shape name. Here the eye position can be set using position names.
+        /// Setting the position "right" to 100 moves the eye position to the right, while setting the position "left"
+        /// to 100 moves the eye position to the left. The other two positions are "up" and "down" for vertical eye
+        /// positions.
+        /// </summary>
+        /// <param name="position">Name of the position (right, left, up, down)</param>
+        /// <param name="intensity">Value from 0 to 100 indicating where the position is set</param>
+        /// <param name="time">The time for the eye position to be set in seconds</param>
+        /// <returns></returns>
         public IEnumerator SetEyePosition(string position, float intensity, float time) {
             if (!_eyePositions.ContainsKey(position)) {
                 yield return false;
@@ -334,12 +415,13 @@ namespace AvatarFacialExpressions {
             // We need to keep track of the current intensity and set the new intensity
             var currentIntensity = _lookValues[position];
             var difference = intensity - currentIntensity;
-            // I know, I know, this code is terrible...
             // Essentially we need to know if we should increment or decrease the current intensity
             var increment = difference > 0;
             difference = Math.Abs(difference);
             _lookValues[position] = intensity;
 
+            // We set the incrementBy value to how big the difference is between the old intensity and the new intensity
+            // If this value is greater than 50 we move the eyes quicker.
             var incrementBy = 1;
             if (difference >= 50) incrementBy = 10;
 

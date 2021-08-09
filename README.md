@@ -5,7 +5,7 @@ What is it?
 
 
 ## Project structure
-
+The project contains three folders. Assets, Packages, and ProjectSettings. 
 
 ### TODO
 1. This README.md
