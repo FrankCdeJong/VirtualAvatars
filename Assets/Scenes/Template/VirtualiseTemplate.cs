@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class VirtualiseTemplate : MonoBehaviour {
     // First time to do is read the simulation data
-    private static readonly ModelData Data = new ModelData(@"./Assets/Scenes/Example/modelData.csv");
+    private static readonly ModelData Data = new ModelData(@"./Assets/Scenes/Template/modelData.csv");
 
     // The virtualisation can have any number of avatars. Public variables can be assigned inside the Unity Editor.
     // This way we can easily specify in the scene what avatars will be used. Private variables cannot be accessed in 

@@ -8,9 +8,9 @@ public class CameraController : MonoBehaviour {
     private Camera[] _cameras;
 
     /// <summary>
-    /// When the game is run this gets the object's children's Camera objects and adds them to a list
+    /// When the game is run this gets the object's children's Camera objects and adds them to a list.
     /// </summary>
-    private void Start() {
+    private void Awake() {
         _cameras = gameObject.GetComponentsInChildren<Camera>();
     }
 
@@ -19,6 +19,11 @@ public class CameraController : MonoBehaviour {
     /// </summary>
     /// <param name="cameraNumber">The index value of cameras list</param>
     public void ShowCamera(int cameraNumber) {
+        if (_cameras == null) {
+            Debug.LogWarning("CameraController not yet initialized or no cameras added");
+            return;
+        }
+
         foreach (var t in _cameras) {
             t.enabled = false;
         }
