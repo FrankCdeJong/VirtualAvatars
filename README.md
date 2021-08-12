@@ -11,9 +11,7 @@ The project contains three folders. Assets, Packages, and ProjectSettings.
 
 ### TODO
 
-1. This README.md
-2. Installation guide
-3. Project structure explanation
+1. Project structure explanation
 ---
 # 1. Installation
 
@@ -69,6 +67,13 @@ To install Blender follow the instructions on their website: https://www.blender
 
 
 ## Creation process
+
+### Video tutorial (recommended)
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Gy6HW2XWAws
+" target="_blank"><img src="http://img.youtube.com/vi/Gy6HW2XWAws/0.jpg"
+alt="Avatar creation video tutorial" width="240" height="180" border="10" /></a>
+
+In the video all the steps from start to finish shown.
 
 ### makehuman
 First create an avatar in the makehuman software.
@@ -138,9 +143,13 @@ To add animations to the avatar head over to mixamo.com. You must log in with an
 * Here you must configure the animations.
   * Rename each animation to the name of the avatar + the name of the animation.
   * For animations that should loop, e.g. walking, running, etc, tick the button called "Loop Time". This makes sure that the animation loops.
+* The final part of importing is to go to the Rig tab. Change the Animation Type from Generic to Humanoid. Click Apply.
 * Next we must create a prefab variant which allows the avatar to be used in more than one scene. Right click the avatar in the project window and select "create" and click "Prefab variant".
 * Select the prefab variant you just created and click "Add Component" in the Inspector. Look for a component called "Rigidbody" and add it to the prefab.
   * In the inspector you can configure the newly added component. Under the "Constraints" settings select "Freeze Rotation" for X, Y, and Z.
-  * Next we must add a Box Collider to the feet of the avatar. TODO
-* Add Animator component TODO
-* Add Avatar Emotion Controller TODO
+  * Next we must add a Box Collider to the feet of the avatar. This ensures that the avatar can collide with other objects in the scene. It also prevents the avatar from clipping through other objects and allows gravity to function on the avatar.
+  * In the project window open the avatar prefab variant. The scene window should now show the different meshes part of the avatar. Select the skeleton, Hips > LHipJoint > LeftUpLeg > LeftLeg > LeftFoot > LeftToeBase. In the Inspector add a new component called Box Collider. You must now transform it so it does not protrudes underneath the avatar.
+* We also need to add an Animator component so we can control the animations of the avatar. Select the prefab variant and in the Inspector click Add Component. Add a component called Animator.
+  * The Animator component requires two settings to be configured. First set the Avatar to avatar that you imported.
+  * Now in the project window right click in the same folder as the avatar and prefab and click create "Animator Controller".
+* We now add the Avatar Emotion Controller script which connects the library to the avatar. Click on the prefab variant and navigate to the "Libraries" folder in the project window. Drag the script called AvatarEmotionController to the "Add Component" button. This should add the script to the avatar.

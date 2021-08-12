@@ -94,8 +94,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7e36f64671030a5d39bfa8b0ba5c3a9e, type: 3}
       propertyPath: m_Name
-      value: human14-v3
+      value: avatar 14
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 7e36f64671030a5d39bfa8b0ba5c3a9e, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 38d9882fe63fd8e9cadc527dad82cd54, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e36f64671030a5d39bfa8b0ba5c3a9e, type: 3}
 --- !u!1 &2813987035710377803 stripped

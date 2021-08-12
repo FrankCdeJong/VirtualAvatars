@@ -15,13 +15,14 @@ public class VirtualiseTemplate : MonoBehaviour {
     public GameObject avatarA;
 
     public GameObject avatarB;
-    // public GameObject avatarC;
+    public GameObject avatarC;
     // public GameObject avatarD;
 
     // Each avatar has an emotion controller and we need to create a reference to access them.
     // If an avatar does not need to express an emotion than this reference is not necessary. 
     private EmotionController _avatarAEmotionController;
     private EmotionController _avatarBEmotionController;
+    private EmotionController _avatarCEmotionController;
 
     // If we want to set the cameras specific to this scenario than adding a reference is also necessary. In the scene 
     // there is a empty game object called "cameras". This object can have any number of child objects of type Camera.
@@ -60,6 +61,7 @@ public class VirtualiseTemplate : MonoBehaviour {
         // raised.
         _avatarAEmotionController = avatarA.GetComponent<AvatarEmotionController>().Controller;
         _avatarBEmotionController = avatarB.GetComponent<AvatarEmotionController>().Controller;
+        _avatarCEmotionController = avatarC.GetComponent<AvatarEmotionController>().Controller;
 
         // Double check that the PlayerEmotionController script is added to both avatars. (This could go wrong if the 
         // scripts aren't loaded yet)
@@ -70,6 +72,11 @@ public class VirtualiseTemplate : MonoBehaviour {
         if (_avatarBEmotionController == null)
             throw new Exception(
                 "Avatar B does not have an PlayerEmotionController script. Without this attached we cannot set the emotions");
+        
+        if (_avatarCEmotionController == null)
+            throw new Exception(
+                "Avatar C does not have an PlayerEmotionController script. Without this attached we cannot set the emotions");
+
 
         // Here we can add additional check to make sure that we have correctly loaded the simulation data. 
         // We read the column "time" and check to make sure it exists.
@@ -108,6 +115,9 @@ public class VirtualiseTemplate : MonoBehaviour {
         // We trigger this function at a specific interval. In this template we use a 200ms interval but it can be
         // changed to any time interval.
         StartCoroutine(ApplyDataToAvatars(0.2f));
+
+        StartCoroutine(_avatarCEmotionController.SetEmotion("angry", 100));
+
     }
     
     private IEnumerator ApplyDataToAvatars(float yieldTime) {
