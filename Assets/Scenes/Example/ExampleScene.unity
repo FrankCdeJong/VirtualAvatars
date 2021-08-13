@@ -400,6 +400,68 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1261248206
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1633717085413935434, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+      propertyPath: m_Name
+      value: avatar 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154956633684694000, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154956633684694000, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154956633684694000, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.651
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154956633684694000, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154956633684694000, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154956633684694000, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154956633684694000, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154956633684694000, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154956633684694000, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154956633684694000, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154956633684694000, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+--- !u!1 &1261248207 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1633717085413935434, guid: 4e10b5451abef8736a1e7771e80a5d1e, type: 3}
+  m_PrefabInstance: {fileID: 1261248206}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1374824867
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,68 +555,6 @@ Transform:
   m_Father: {fileID: 1986760123}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 29.372, y: 31.819, z: 42.472}
---- !u!1001 &1541377128
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2813987035710377803, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
-      propertyPath: m_Name
-      value: human14-v3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190407674388944369, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190407674388944369, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 8.52
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190407674388944369, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.651
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190407674388944369, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190407674388944369, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190407674388944369, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190407674388944369, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190407674388944369, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190407674388944369, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190407674388944369, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190407674388944369, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
---- !u!1 &1541377129 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2813987035710377803, guid: ee145ced3242303d38d5aa7fdf73201c, type: 3}
-  m_PrefabInstance: {fileID: 1541377128}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1572147990
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   avatarA: {fileID: 1059784317}
-  avatarB: {fileID: 1541377129}
+  avatarB: {fileID: 1261248207}
   cameraController: {fileID: 729137754}
 --- !u!4 &1598074106
 Transform:
