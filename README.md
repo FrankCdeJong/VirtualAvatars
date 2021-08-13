@@ -69,9 +69,7 @@ To install Blender follow the instructions on their website: https://www.blender
 ## Creation process
 
 ### Video tutorial (recommended)
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=Gy6HW2XWAws
-" target="_blank"><img src="http://img.youtube.com/vi/Gy6HW2XWAws/0.jpg"
-alt="Avatar creation video tutorial" width="240" height="180" border="10" /></a>
+[![Link to video tutorial](http://img.youtube.com/vi/Gy6HW2XWAws/0.jpg)](http://www.youtube.com/watch?v=Gy6HW2XWAws)
 
 In the video all the steps from start to finish shown.
 
