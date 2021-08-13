@@ -1,17 +1,41 @@
 # Virtual Avatars
 
-What is it?
+Avatar virtualisation can be used in therapy or coaching sessions to help the patients gain insight into their behaviour and understand their functioning better.
 
-## Features
-
+This repository contains a virtualisation project utilising the Unity game engine. It includes several human-like avatars with the ability to express several human emotions.
+Several programming libraries are included to facilitate the easy application of simulation data from causal models to the virtual avatars.
+The libraries are easy to expand and can be used in several different virtualisation scenarios. A guide is included to create new avatars as well.
 
 ## Project structure
 
 The project contains three folders. Assets, Packages, and ProjectSettings.
 
-### TODO
+* Assets
+  * Additional Assets
+    * This folder contains any additional assets that are used in many different scenes. This includes prefabs for scenes, materials, etc.
+  * Libraries
+    * The Libraries folder contains several different namespaces and functions used in the virtualisation of avatars. This includes the `Avatar Actions`, `Avatar Emotion Controller`, `Avatar Facial Expressions`, `Camera Controller`, and `Model Data`.
+  * Meshes
+    * The Meshes folder contains assets used in the virtualisation.
+    * Avatars
+      * This folder contains the avatars. Two avatars are included in the base project.
+  * Scenes
+    * This folder contains the different virtualisation scenes. A scene can contains its own level, avatars, and any other assets.
+    * Example
+      * This scene is an example virtualisation.
+    * Template
+      * This scene is a template for creating new scenes.
 
-1. Project structure explanation
+## TODO
+
+This project can be improved by adding several features
+
+1. Make an automation software to make it easy to create new avatars.
+2. Expand Avatar Action library to include more actions.
+3. Create a main menu where a user can select which scene is loaded.
+4. Expand documentation further to make it easier to pick up the project.
+5. Think of more things to do.
+
 ---
 # 1. Installation
 
@@ -47,9 +71,18 @@ Once Unity (Unity Hub) is installed adding the project is straightforward.
 Once the project is open the Project window will contain several folders with all the necessary assets. The important folders are: `Libraries`, `Meshes`, and `Scenes`.
 The libraries folder contains all the script and libraries to control avatars. The meshes folder contains the avatars. The scenes folder contains the different scenes.
 
-The scenes folder contains an example and a template. To create a new virtualisation scenario duplicate the template folder and rename all the items. Open the scene by double clicking the scene asset (template scene called Template Scene). The template scene contains several game objects. Cameras, Level, avatar 13 prefab, avatar 14 prefab, and Controller. The Controller object links the scene to the virtualisation script called Virtualise Template. You can add anything into the scene, to build the scene. To control the scene you will need to modify the script. The template script contains detailed explanations how the avatars are controlled using the simulation data from the model.
+The scenes folder contains an example and a template. To create a new virtualisation scenario duplicate the template folder and rename all the items. Open the scene by double clicking the scene asset (template scene called Template Scene). The template scene contains several game objects. Cameras, Level, avatar 1, avatar 2, and Controller. The Controller object links the scene to the virtualisation script called Virtualise Template. You can add anything into the scene, to build the scene. To control the scene you will need to modify the script. The template script contains detailed explanations how the avatars are controlled using the simulation data from the model.
 
 The other scene is an example virtualisation of two avatars arguing. To open the scene double click the Scene Asset, and to play the scene click the Play button at the top of the editor.
+
+Each scene can contain anything part of the virtualisation. This makes it easy to separate several different virtualisation scenarios. To make it easy to reuse assets across different scenes Unity has a concept called prefabs. See Unity's manual for more details https://docs.unity3d.com/Manual/Prefabs.html.
+
+How to connect simulation data from a model to the avatars is explained in the Example scene and the template. The libraries also contain many details on how to trigger actions and animations.
+
+# Useful resources
+
+1. Unity Manual: https://docs.unity3d.com/Manual/UnityManual.html
+2. Blender Manual: https://docs.blender.org/manual/en/latest/
 
 # 2. Creating Avatars
 
