@@ -1,4 +1,4 @@
-# Virtual Avatars
+# 1. Virtual Avatars
 
 Avatar virtualisation can be used in therapy or coaching sessions to help the patients gain insight into their behaviour and understand their functioning better.
 
@@ -6,7 +6,7 @@ This repository contains a virtualisation project utilising the Unity game engin
 Several programming libraries are included to facilitate the easy application of simulation data from causal models to the virtual avatars.
 The libraries are easy to expand and can be used in several different virtualisation scenarios. A guide is included to create new avatars as well.
 
-## Project structure
+## 1.1 Project structure
 
 The project contains three folders. Assets, Packages, and ProjectSettings.
 
@@ -26,7 +26,7 @@ The project contains three folders. Assets, Packages, and ProjectSettings.
     * Template
       * This scene is a template for creating new scenes.
 
-## TODO
+## 1.2 TODO
 
 This project can be improved by adding several features
 
@@ -37,28 +37,28 @@ This project can be improved by adding several features
 5. Think of more things to do.
 
 ---
-# 1. Installation
+# 2. Installation
 
 This virtualisation project is a Unity project which requires the Unity software to be installed.
 
 To create virtual avatars several different software is required (see section 2.1)
 
-## 1.1 Unity software
+## 2.1 Unity software
 
 To install Unity follow their instructions: https://store.unity.com/download?ref=personal
 
 Once downloaded you must login and then activate a new license in Unity Hub.
 The license option should be `Unity Personal` and `I don't use Unity in a professional capacity`.
 
-## 1.2 Additional software
+## 2.2 Additional software
 
-### 1.2.1 Git Large File Storage
+### 2.2.1 Git Large File Storage
 
 Unity uses some large binary assets for 3D models, sounds, images, etc. (https://thoughtbot.com/blog/how-to-git-with-unity) Git LFS must be installed. This replaces large files such as audio samples, videos, datasets, and graphics with text pointers inside Git, while storing the file contents on a remote server like GitHub.com or GitHub Enterprise (https://git-lfs.github.com/).
 
 Git Large File Storage can be installed from https://git-lfs.github.com/. Make sure to follow the installation instructions.
 
-## 1.3 Adding the virtualisation project to unity
+## 2.3 Adding the virtualisation project to unity
 
 Once Unity (Unity Hub) is installed adding the project is straightforward.
 1. First clone this repository to your device.
@@ -67,7 +67,7 @@ Once Unity (Unity Hub) is installed adding the project is straightforward.
 4. Finally go back to the projects tab and open the project.
 
 ---
-# Usage
+# 3. Usage
 Once the project is open the Project window will contain several folders with all the necessary assets. The important folders are: `Libraries`, `Meshes`, and `Scenes`.
 The libraries folder contains all the script and libraries to control avatars. The meshes folder contains the avatars. The scenes folder contains the different scenes.
 
@@ -79,34 +79,34 @@ Each scene can contain anything part of the virtualisation. This makes it easy t
 
 How to connect simulation data from a model to the avatars is explained in the Example scene and the template. The libraries also contain many details on how to trigger actions and animations.
 
-# Useful resources
+# 4. Useful resources
 
 1. Unity Manual: https://docs.unity3d.com/Manual/UnityManual.html
 2. Blender Manual: https://docs.blender.org/manual/en/latest/
 
-# 2. Creating Avatars
+# 5. Creating Avatars
 
-## 2.1 Installation of additional software
+## 5.1 Installation of additional software
 To create avatars a number of additional software must be installed first.
 
-### 2.1.1 Makehuman Project
+### 5.1.1 Makehuman Project
 To install Makehuman follow the instructions on the Makehuman wiki: http://www.makehumancommunity.org/content/makehuman_120.html
 
-#### 2.1.2 Makehuman required plugins
+#### 5.1.2 Makehuman required plugins
 This project requires the use of the FACSHuman plugin for makehuman. Detailed installation of this plugin is found on their Github page: https://github.com/montybot/FACSHuman#facshuman-installation
 
-### 2.1.3 Blender
+### 5.1.3 Blender
 To install Blender follow the instructions on their website: https://www.blender.org/download/
 
 
-## Creation process
+## 5.2 Creation process
 
-### Video tutorial (recommended)
+### 5.2.1 Video tutorial (recommended)
 [![Link to video tutorial](http://img.youtube.com/vi/Gy6HW2XWAws/0.jpg)](http://www.youtube.com/watch?v=Gy6HW2XWAws)
 
 In the video all the steps from start to finish shown.
 
-### makehuman
+### 5.2.2 makehuman
 First create an avatar in the makehuman software.
 
 * Pose/Animate > Skeleton > Cmu mb
@@ -114,7 +114,7 @@ First create an avatar in the makehuman software.
 
 Export this with Mesh format `Filmbox (fbx)`
 
-### blender
+### 5.2.3 blender
 Create a new blender project and remove the default light, camera, and cube.
 * File > Import > FBX (.fbx) the avatar you created in make human.
   * Make sure to untick the `Manual Orientation`, and `Animation` settings.
@@ -135,7 +135,7 @@ Next the blend shapes must be imported for facial expression. This step involves
 * Now delete the newly imported mesh and repeat this process for the remaining meshes.
 * After completing this for one set of FACS codes you must go back to makehuman, load the next FACS codes, export the FBX, import the FBX into blender and repeat the process of creating blend shapes.
 
-### Animations
+### 5.2.4 Animations
 
 To add animations to the avatar head over to mixamo.com. You must log in with an adobe account to use this service. Once logged in, select the option to `UPLOAD CHARACTER`. Select the base avatar that was exported from makehuman. It will take a bit to upload but after it is uploaded you can search for an animation.
 * Find an animation you want to add.
@@ -152,7 +152,7 @@ To add animations to the avatar head over to mixamo.com. You must log in with an
 * Select the imported animation after which you can delete the imported skeleton.
 * Repeat this process for as many animations you want to add to the avatar.
 
-### Importing the avatar to Unity
+### 5.2.5 Importing the avatar to Unity
 
 * In the scene select all the avatars meshes, skeleton, and anything else that belongs to the avatar.
 * Next go to File > Export > FBX, modify the following settings
