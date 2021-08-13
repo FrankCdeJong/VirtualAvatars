@@ -41,7 +41,7 @@ This project can be improved by adding several features
 
 This virtualisation project is a Unity project which requires the Unity software to be installed.
 
-To create virtual avatars several different software is required (see section 2.1)
+To create virtual avatars several different software is required (see section 5.1)
 
 ## 2.1 Unity software
 
@@ -123,7 +123,7 @@ Create a new blender project and remove the default light, camera, and cube.
 Next the blend shapes must be imported for facial expression. This step involves going back and forth from makehuman to blender.
 * Open the base avatar in makehuman.
 * Remove the skeleton by going to Pose/Animate > Skeleton and selecting None.
-* Next go to the Modelling > FACSHuman 0.1 tab. If this is not here then you have not installed the required plugins correctly (section 2.1.2).
+* Next go to the Modelling > FACSHuman 0.1 tab. If this is not here then you have not installed the required plugins correctly (section 5.1.2).
 * In the right panel you should see a section called `Action Units coding` and a button called `Load FACS Code`. Click this and select the code for the emotion you need to encode.
 * Now export this as an FBX.
 * In blender import the FBX you just exported in makehuman by going to File > Import > FBX (.fbx)
