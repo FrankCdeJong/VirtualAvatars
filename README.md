@@ -149,5 +149,6 @@ To add animations to the avatar head over to mixamo.com. You must log in with an
   * In the project window open the avatar prefab variant. The scene window should now show the different meshes part of the avatar. Select the skeleton, Hips > LHipJoint > LeftUpLeg > LeftLeg > LeftFoot > LeftToeBase. In the Inspector add a new component called Box Collider. You must now transform it so it does not protrudes underneath the avatar.
 * We also need to add an Animator component so we can control the animations of the avatar. Select the prefab variant and in the Inspector click Add Component. Add a component called Animator.
   * The Animator component requires two settings to be configured. First set the Avatar to avatar that you imported.
+  * Make sure to untick `Apply Root Motion`
   * Now in the project window right click in the same folder as the avatar and prefab and click create "Animator Controller".
 * We now add the Avatar Emotion Controller script which connects the library to the avatar. Click on the prefab variant and navigate to the "Libraries" folder in the project window. Drag the script called AvatarEmotionController to the "Add Component" button. This should add the script to the avatar.

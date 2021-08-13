@@ -82,6 +82,35 @@ namespace AvatarActions {
                 Transform.Rotate(Vector3.up / 6);
         }
     }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AvatarEyeMoveAction : AvatarAction {
+        private readonly EyeMovementController _eyes;
+
+        /// <summary>
+        /// See AvatarAction class for more details.
+        /// </summary>
+        public AvatarEyeMoveAction(Rigidbody body, Animator animator, Transform transform) : base(body, animator, transform) {
+            _eyes = new EyeMovementController(body.gameObject);
+        }
+
+        public override IEnumerator Trigger() {
+            yield return null;
+        }
+
+        /// <summary>
+        /// Set the X and Y position of an avatar's eyes
+        /// </summary>
+        /// <param name="x">Value between -100 and 100 for left and right</param>
+        /// <param name="y">Value between -100 and 100 for up and down</param>
+        /// <returns></returns>
+        public IEnumerator SetEyeXOrYIntensity(int x, int y) {
+            yield return _eyes.SetEyeXOrYPosition("x", x, 0.2f);
+            yield return _eyes.SetEyeXOrYPosition("y", y, 0.2f);
+        }
+    }
 
     /// <summary>
     /// The AngryGesture3 action triggers an animation in the Avatar. This animation can be triggered only once.

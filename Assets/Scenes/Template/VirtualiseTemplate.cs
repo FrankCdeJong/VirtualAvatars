@@ -50,7 +50,7 @@ public class VirtualiseTemplate : MonoBehaviour {
     private AvatarAction _action1;
     private AvatarAction _action2;
     private LookAway _action3;
-    private AvatarAction _action4;
+    private AvatarEyeMoveAction _action4;
 
     private void Start() {
         // The start function is a Unity event automatically triggered when the scene is run. Here we set up all our
@@ -108,7 +108,7 @@ public class VirtualiseTemplate : MonoBehaviour {
         var transformB = avatarB.GetComponent<Transform>();
         _action3 = new LookAway(rigidBodyB, animatorB, transformB);
         
-        _action4 = new AngryGesture3(rigidBodyB, animatorB, transformB);
+        _action4 = new AvatarEyeMoveAction(rigidBodyA, animatorA, transformA);
 
         // Now that we have all our references set up we can trigger the virtualisation. We need to create a step
         // function that takes all the simulation data and applies it to the avatars.  
@@ -166,5 +166,7 @@ public class VirtualiseTemplate : MonoBehaviour {
 
         // Certain actions can have custom functions
         StartCoroutine(_action3.SetIntensity(row1));
+
+        StartCoroutine(_action4.SetEyeXOrYIntensity(75, 0));
     }
 }
