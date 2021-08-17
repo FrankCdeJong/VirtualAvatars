@@ -43,8 +43,6 @@ public class VirtualiseExample : MonoBehaviour {
 
         // Each row we read a new angry state so we have to set it each time.
         StartCoroutine(_avatarAEmotionController.SetEmotion("angry", x12 * 100));
-
-        // TODO: x11, x13
     }
 
     private IEnumerator ApplyDataToAvatars(float yieldTime) {
@@ -72,11 +70,21 @@ public class VirtualiseExample : MonoBehaviour {
                 cameraController.ShowCamera(0);
 
             ModelDataToAvatar(_x11Break[i], _x12Anger[i], _x13Threaten[i], _x21Gazeaway[i], _x22Walkaway[i]);
-
-            // We wait for yieldTime. After the execution continues in this loop having kept all the values.
-            // This way we arent' busy waiting or have to do some complicated time keeping ourselves.
+            
+            // This yieldTime is how long the virtualisation waits before the next row of data is applied. If we
+            // applied all the rows without waiting, the virtualisation would be done in a few seconds. Instead, we
+            // read a row of data, apply it, and then wait for a bit, then read the next row. Unity has a function
+            // called WaitForSeconds. This allows us to stop executing a function, wait for a few seconds, and then
+            // continue the execution where we left off. This is a very powerful feature because we don't have to call
+            // the same function again and again.
             yield return new WaitForSeconds(yieldTime);
         }
+        
+        // Exit the application after we have applied all simulation data
+        if (Application.isEditor)
+            UnityEditor.EditorApplication.isPlaying = false;
+        else
+            Application.Quit();
 
         yield return true;
     }
@@ -113,10 +121,6 @@ public class VirtualiseExample : MonoBehaviour {
 
         _lookAway = new LookAway(avatarB.GetComponent<Rigidbody>(), avatarB.GetComponent<Animator>(),
             avatarB.GetComponent<Transform>());
-
-        // Test action: trigger a simple animation
-        StartCoroutine(new AngryPoint(avatarA.GetComponent<Rigidbody>(), avatarA.GetComponent<Animator>(),
-            avatarA.GetComponent<Transform>()).Trigger());
 
         StartCoroutine(ApplyDataToAvatars(0.2f));
     }

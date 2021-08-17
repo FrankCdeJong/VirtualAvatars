@@ -15,6 +15,7 @@ public class VirtualiseTemplate : MonoBehaviour {
     public GameObject avatarA;
 
     public GameObject avatarB;
+
     public GameObject avatarC;
     // public GameObject avatarD;
 
@@ -22,7 +23,7 @@ public class VirtualiseTemplate : MonoBehaviour {
     // If an avatar does not need to express an emotion than this reference is not necessary. 
     private EmotionController _avatarAEmotionController;
     private EmotionController _avatarBEmotionController;
-    private EmotionController _avatarCEmotionController;
+    // private EmotionController _avatarCEmotionController;
 
     // If we want to set the cameras specific to this scenario than adding a reference is also necessary. In the scene 
     // there is a empty game object called "cameras". This object can have any number of child objects of type Camera.
@@ -61,7 +62,7 @@ public class VirtualiseTemplate : MonoBehaviour {
         // raised.
         _avatarAEmotionController = avatarA.GetComponent<AvatarEmotionController>().Controller;
         _avatarBEmotionController = avatarB.GetComponent<AvatarEmotionController>().Controller;
-        _avatarCEmotionController = avatarC.GetComponent<AvatarEmotionController>().Controller;
+        // _avatarCEmotionController = avatarC.GetComponent<AvatarEmotionController>().Controller;
 
         // Double check that the PlayerEmotionController script is added to both avatars. (This could go wrong if the 
         // scripts aren't loaded yet)
@@ -72,10 +73,10 @@ public class VirtualiseTemplate : MonoBehaviour {
         if (_avatarBEmotionController == null)
             throw new Exception(
                 "Avatar B does not have an PlayerEmotionController script. Without this attached we cannot set the emotions");
-        
-        if (_avatarCEmotionController == null)
-            throw new Exception(
-                "Avatar C does not have an PlayerEmotionController script. Without this attached we cannot set the emotions");
+
+        // if (_avatarCEmotionController == null)
+        //    throw new Exception(
+        //        "Avatar C does not have an PlayerEmotionController script. Without this attached we cannot set the emotions");
 
 
         // Here we can add additional check to make sure that we have correctly loaded the simulation data. 
@@ -91,7 +92,7 @@ public class VirtualiseTemplate : MonoBehaviour {
 
         // The first action we add is the Angry point action. It triggers an animation on the avatar we want. In this 
         // case we want avatar A to perform this action later so we initialize it with avatar A's properties.
-        _action1 = new AngryPoint(avatarA.GetComponent<Rigidbody>(), avatarA.GetComponent<Animator>(),
+        _action1 = new AvatarMakeAngryPointGesture(avatarA.GetComponent<Rigidbody>(), avatarA.GetComponent<Animator>(),
             avatarA.GetComponent<Transform>());
 
         // To prevent us from repeating the same GetComponent function every time we can create some local variables.
@@ -100,14 +101,14 @@ public class VirtualiseTemplate : MonoBehaviour {
         var transformA = avatarA.GetComponent<Transform>();
 
         // Now we can simply pass in the same information easily improving the readability.
-        _action2 = new AngryGesture3(rigidBodyA, animatorA, transformA);
+        _action2 = new AvatarMakeAngryGesture(rigidBodyA, animatorA, transformA);
 
         // We repeat this for as many actions as we need
         var rigidBodyB = avatarB.GetComponent<Rigidbody>();
         var animatorB = avatarB.GetComponent<Animator>();
         var transformB = avatarB.GetComponent<Transform>();
         _action3 = new LookAway(rigidBodyB, animatorB, transformB);
-        
+
         _action4 = new AvatarEyeMoveAction(rigidBodyA, animatorA, transformA);
 
         // Now that we have all our references set up we can trigger the virtualisation. We need to create a step
@@ -116,10 +117,9 @@ public class VirtualiseTemplate : MonoBehaviour {
         // changed to any time interval.
         StartCoroutine(ApplyDataToAvatars(0.2f));
 
-        StartCoroutine(_avatarCEmotionController.SetEmotion("angry", 100));
-
+        // StartCoroutine(_avatarCEmotionController.SetEmotion("angry", 100));
     }
-    
+
     private IEnumerator ApplyDataToAvatars(float yieldTime) {
         // We loop through each row of the data and get each value in that row. We call a function which will apply
         // the data to the avatars.
@@ -140,7 +140,7 @@ public class VirtualiseTemplate : MonoBehaviour {
                 cameraController.ShowCamera(2);
             if (i > 215)
                 cameraController.ShowCamera(0);
-            
+
             // Now we call a function that applies our actions to the avatars using the data in the current step
             ModelDataToAvatar(_row1[i], _row2[i], _row3[i], _row4[i], _row5[i]);
 
@@ -148,6 +148,13 @@ public class VirtualiseTemplate : MonoBehaviour {
             // This way we arent' busy waiting or have to do some complicated time keeping ourselves.
             yield return new WaitForSeconds(yieldTime);
         }
+
+        // Exit the application after we have applied all simulation data
+        // if (Application.isEditor)
+        //     UnityEditor.EditorApplication.isPlaying = false;
+        // else
+        //     Application.Quit();
+        Debug.Log("Read all simulation data");
 
         yield return true;
     }
@@ -158,9 +165,9 @@ public class VirtualiseTemplate : MonoBehaviour {
             // Then to trigger the action
             if (!_action1.Triggered) StartCoroutine(_action1.Trigger());
         }
-        
+
         if (!_action1.Triggered) StartCoroutine(_action2.Trigger());
-        
+
         // We can set the avatars emotion to a specific intensity as follows:
         StartCoroutine(_avatarAEmotionController.SetEmotion("angry", row2 * 100));
 

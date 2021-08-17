@@ -128,11 +128,11 @@ Next the blend shapes must be imported for facial expression. This step involves
 * Now export this as an FBX.
 * In blender import the FBX you just exported in makehuman by going to File > Import > FBX (.fbx)
   * Make sure to untick the `Manual Orientation`, and `Animation` settings.
-* The blender project should now contain two meshes, the base avatar and the avatar with the active FACS codes. There will be a mesh for every part of the avatar. Depending on what FACS codes were activated only some parts of the mesh are important. Any part of the newly imported mesh that is clearly not activated can be deleted. For example the clothing and hair aren't triggered. Select, first the newly import mesh, and then the corresponding mesh on the base avatar.
+* The blender project should now contain two avatars, the base avatar and the avatar with the active FACS codes. There will be a mesh for every part of the avatar. Depending on what FACS codes were activated only some parts of the mesh are important. Any part of the newly imported mesh that is clearly not activated can be deleted. For example the clothing and hair aren't triggered. Select, first the newly import mesh, and then the corresponding mesh on the base avatar.
 * In the properties window select `Object Data Properties`, and under the `Shape Keyes` tab select the `Shape Key Specials` button on the right side. Click the `Join as Shapes` button to create the blend shape.
 * A new Shape Key will be added. Make sure to rename the added blend shape to: `emotion_name-area_activated`. For example, activating the FACS codes for expressing the eyebrows while angry would be named `angry-eyebrows`, or for the mouth `angry-mouth`.
 * To preview the blend shape set the weight to 1.
-* Now delete the newly imported mesh and repeat this process for the remaining meshes.
+* Now delete the newly imported mesh because it has been joined as a blend shape and is no longer needed. Now select the next imported mesh and the corresponding existing mesh and repeat this process of joining them as blend shapes.
 * After completing this for one set of FACS codes you must go back to makehuman, load the next FACS codes, export the FBX, import the FBX into blender and repeat the process of creating blend shapes.
 
 ### 5.2.4 Animations
@@ -149,7 +149,8 @@ To add animations to the avatar head over to mixamo.com. You must log in with an
 * Once imported, rename the imported skeleton to the name of your avatar.
 * Open a new window in blender and select the `Dope sheet`, and the `Action Editor`
 * In the Scene select the base avatars skeleton, and in the Action Editor click the button next to the button labeled "New" called "Browse Action to be linked".
-* Select the imported animation after which you can delete the imported skeleton.
+* Select the imported animation. This adds the animation to the avatar's skeleton.
+* The imported skeleton with the animation can be removed.
 * Repeat this process for as many animations you want to add to the avatar.
 
 ### 5.2.5 Importing the avatar to Unity

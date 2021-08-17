@@ -115,8 +115,8 @@ namespace AvatarActions {
     /// <summary>
     /// The AngryGesture3 action triggers an animation in the Avatar. This animation can be triggered only once.
     /// </summary>
-    public class AngryGesture3 : AvatarAction {
-        public AngryGesture3(Rigidbody body, Animator animator, Transform transform) : base(body, animator, transform) {
+    public class AvatarMakeAngryGesture : AvatarAction {
+        public AvatarMakeAngryGesture(Rigidbody body, Animator animator, Transform transform) : base(body, animator, transform) {
         }
 
         public override IEnumerator Trigger() {
@@ -135,9 +135,9 @@ namespace AvatarActions {
     /// <summary>
     /// The AngryPoint action triggers an animation in the avatar. It can be triggered only once.
     /// </summary>
-    public class AngryPoint : AvatarAction {
+    public class AvatarMakeAngryPointGesture : AvatarAction {
         // This Action triggers an animation
-        public AngryPoint(Rigidbody body, Animator animator, Transform transform) : base(body, animator, transform) {
+        public AvatarMakeAngryPointGesture(Rigidbody body, Animator animator, Transform transform) : base(body, animator, transform) {
         }
 
         public override IEnumerator Trigger() {
