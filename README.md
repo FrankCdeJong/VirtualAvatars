@@ -6,6 +6,10 @@ Mental processes in the brain and body are often modelled and simulated by causa
 
 Read more on [Research Gate](https://www.researchgate.net/publication/354200343_From_Mental_Network_Models_to_Virtualisation_by_Avatars_a_First_Software_Implementation).
 
+# Preview
+
+[![Link to video](https://img.youtube.com/vi/ZL8Kvu9x8p0/hqdefault.jpg)](https://www.youtube.com/watch?v=ZL8Kvu9x8p0)
+
 # 1. Virtual Avatars
 
 Avatar virtualisation can be used in therapy or coaching sessions to help the patients gain insight into their behaviour and understand their functioning better.
